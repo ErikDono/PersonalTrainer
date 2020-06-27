@@ -49,7 +49,7 @@ app.get("/exercise", (req, res) => {
 });
 
 app.post("/submit", ({ body }, res) => {
-    db.Exercise.create(body)
+    db.Workout.create(body)
         .then(({ _id }) => db.Workout.findOneAndUpdate({ _id: req.params.id }, { $push: { Exercise: _id } }, { new: true }))
         .then(dbWorkout => {
             res.json(dbWorkout);
