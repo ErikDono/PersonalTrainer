@@ -17,7 +17,7 @@ const workOutSchema = new Schema({
       
     },
     duration: {
-      type: String,
+      type: Number,
       
     },
     weight: {

@@ -33,15 +33,26 @@ app.get("/api/workouts", (req, res) => {
             res.json(err);
         });
 });
-app.get("/stats", (req, res) =>{
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + '/public/index.html')
+})
+app.get("/stats", (req, res) => {
     res.sendFile(__dirname + '/public/stats.html')
+    db.Workout.find({})
+        .then(dbWorkout => {
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.json(err);
+        });
 });
-app.get("/api/workouts/range", (req, res)=>{
+app.get("/api/workouts/range", (req, res) => {
 
 
 })
 app.put("/api/workouts/:id", (req, res) => {
     console.log(req.params)
+
 
     db.Workout.update(
         {
@@ -73,10 +84,14 @@ app.get("/exercise", (req, res) => {
         });
 });
 
+
 app.post("/api/workouts", ({ body }, res) => {
-    db.Workout.create({ date: new Date().setDate(new Date().getDate()) })
+
+    console.log("  --------- \nheres the body!", body)
+
+
+    db.Workout.create({ day: new Date().setDate(new Date().getDate()) })
         .then(dbWorkout => {
-            console.log(dbWorkout)
             res.json(dbWorkout);
         })
         .catch(err => {
@@ -84,3 +99,12 @@ app.post("/api/workouts", ({ body }, res) => {
         });
 });
 
+app.get("/exercise/:id", (req, res) => {
+    db.Workout.find({})
+        .then(dbWorkout => {
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+});
