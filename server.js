@@ -17,16 +17,59 @@ app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 
-app.post("/submit", ({ body }, res) => {
-    res.json({ success: true })
-});
-
-app.get("/getAll", (req, res) => {
-    db.Workout.find({}).then(r => {
-        res.json({ data: r })
-    })
-})
+// require("./routes/api")(app)
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);
+});
+db.Workout.create({ day: new Date().setDate(new Date().getDate()) })
+    .then(dbWorkout => {
+        console.log(dbWorkout.day);
+    })
+    .catch(({ message }) => {
+        console.log(message);
+    });
+app.post("/submit", ({ body }, res) => {
+    res.json({ success: true })
+});
+app.get("/api/workouts", (req, res) => {
+    db.Workout.find({})
+        .then(dbWorkout => {
+            console.log(dbWorkout)
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+});
+
+app.get("/exercise", (req, res) => {
+    db.Exercise.find({})
+        .then(dbExercise => {
+            res.json(dbExercise);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+});
+
+app.post("/submit", ({ body }, res) => {
+    db.Exercise.create(body)
+        .then(({ _id }) => db.Workout.findOneAndUpdate({ _id: req.params.id }, { $push: { Exercise: _id } }, { new: true }))
+        .then(dbWorkout => {
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+});
+
+app.get("/exercise/:id", (req, res) => {
+    db.Workout.find({})
+        .then(dbWorkout => {
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.json(err);
+        });
 });
