@@ -15,7 +15,7 @@
 
 ## Table of Contents:
 
-* [Installation](#Installation)
+* [Website](#Website)
 * [Usage](#Usage)
 * [License](#License)
 * [Contribution](#Contribution)
@@ -24,19 +24,12 @@
 
 
 
+## Website
 
-## Function Video 
-
-
-
-## Installation
-
-  
+```https://upennpersonaltrainer.herokuapp.com/```
 
 ## Usage
-   
-   Personal Trainers: to orginize, create, and update clients
-   Clients: to view and get orginized around fitness! 
+   This app will allow a user to store their work out routine information and track their progress.  
 
 ## License:
 
@@ -49,20 +42,14 @@
 
 ## Future Deploys:
 
-- Add Note functionality: create cards for new notes
-- Add table of workouts to be assigned to different clients
-- Add table of diet/food plans to be assigned to different clients
-- Add more trainers
-- Being able to store user info with JSON encrypted tokens
+As of right now, the only funtion that works is adding in a new Workout and Routine. I was sucessful in implimeiting the routes for this, and making sure that the date transferred over. However i noticed that duration comes back as undefine despite it matching the necessary 'Number' requirement in the squema. I also struggled to get the other aspect of the site functioning. Until next time! 
 
    
-
-
 ## Git Hub Info:
 ### Name
     
- 
-  :feelsgood: ErikDono
+
+  :feelsbad: ErikDono
 
 
 
