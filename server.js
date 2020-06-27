@@ -23,9 +23,7 @@ app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);
 });
 
-app.post("/submit", ({ body }, res) => {
-    res.json({ success: true })
-});
+
 app.get("/api/workouts", (req, res) => {
     db.Workout.find({})
         .then(dbWorkout => {
@@ -36,6 +34,28 @@ app.get("/api/workouts", (req, res) => {
             res.json(err);
         });
 });
+
+app.put("/api/workouts/:id", ({ params }, res) => {
+    console.log(params)
+    db.Workout.update(
+        {
+            _id: mongojs.ObjectId(params.id)
+        },
+        {
+            $set: {
+                exercises: req.body
+            }
+        }, (error, edited) => {
+            if (error) {
+                console.log(error);
+                res.send(error);
+            } else {
+                console.log(edited);
+                res.send(edited);
+            }
+        })
+
+})
 
 app.get("/exercise", (req, res) => {
     res.sendFile(__dirname + '/public/exercise.html')
@@ -48,9 +68,8 @@ app.get("/exercise", (req, res) => {
         });
 });
 
-app.post("/submit", ({ body }, res) => {
+app.post("/api/workouts", ({ body }, res) => {
     db.Workout.create(body)
-        .then(({ _id }) => db.Workout.findOneAndUpdate({ _id: req.params.id }, { $push: { Exercise: _id } }, { new: true }))
         .then(dbWorkout => {
             res.json(dbWorkout);
         })
