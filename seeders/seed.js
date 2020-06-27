@@ -133,7 +133,7 @@ let workoutSeed = [
         reps: 10,
         sets: 1,
         distance: 2
-
+      
       }
     ]
   }

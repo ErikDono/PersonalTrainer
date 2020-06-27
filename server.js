@@ -27,19 +27,25 @@ app.listen(PORT, () => {
 app.get("/api/workouts", (req, res) => {
     db.Workout.find({})
         .then(dbWorkout => {
-            console.log(dbWorkout)
             res.json(dbWorkout);
         })
         .catch(err => {
             res.json(err);
         });
 });
+app.get("/stats", (req, res) =>{
+    res.sendFile(__dirname + '/public/stats.html')
+});
+app.get("/api/workouts/range", (req, res)=>{
 
-app.put("/api/workouts/:id", ({ params }, res) => {
-    console.log(params)
+
+})
+app.put("/api/workouts/:id", (req, res) => {
+    console.log(req.params)
+
     db.Workout.update(
         {
-            _id: mongojs.ObjectId(params.id)
+            _id: req.params.id
         },
         {
             $set: {
@@ -54,7 +60,6 @@ app.put("/api/workouts/:id", ({ params }, res) => {
                 res.send(edited);
             }
         })
-
 })
 
 app.get("/exercise", (req, res) => {
@@ -69,8 +74,9 @@ app.get("/exercise", (req, res) => {
 });
 
 app.post("/api/workouts", ({ body }, res) => {
-    db.Workout.create(body)
+    db.Workout.create({ date: new Date().setDate(new Date().getDate()) })
         .then(dbWorkout => {
+            console.log(dbWorkout)
             res.json(dbWorkout);
         })
         .catch(err => {
@@ -78,12 +84,3 @@ app.post("/api/workouts", ({ body }, res) => {
         });
 });
 
-app.get("/exercise/:id", (req, res) => {
-    db.Workout.find({})
-        .then(dbWorkout => {
-            res.json(dbWorkout);
-        })
-        .catch(err => {
-            res.json(err);
-        });
-});

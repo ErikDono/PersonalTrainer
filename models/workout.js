@@ -6,7 +6,6 @@ const Schema = mongoose.Schema;
 const workOutSchema = new Schema({
   day: {
     type: Date,
-    required: true
   },
   exercises: [{
     type: {
