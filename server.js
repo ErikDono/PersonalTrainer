@@ -22,13 +22,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { use
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);
 });
-db.Workout.create({ day: new Date().setDate(new Date().getDate()) })
-    .then(dbWorkout => {
-        console.log(dbWorkout.day);
-    })
-    .catch(({ message }) => {
-        console.log(message);
-    });
+
 app.post("/submit", ({ body }, res) => {
     res.json({ success: true })
 });
@@ -44,9 +38,10 @@ app.get("/api/workouts", (req, res) => {
 });
 
 app.get("/exercise", (req, res) => {
-    db.Exercise.find({})
-        .then(dbExercise => {
-            res.json(dbExercise);
+    res.sendFile(__dirname + '/public/exercise.html')
+    db.Workout.find({})
+        .then(dbWorkout => {
+            res.json(dbWorkout);
         })
         .catch(err => {
             res.json(err);
